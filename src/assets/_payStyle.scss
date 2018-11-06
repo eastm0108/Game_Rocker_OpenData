@@ -1,0 +1,21 @@
+$border-radius: 0.25rem;
+$lakeblue:  #aaddff;
+$infoTh: #3a13bf;
+.payTable{
+  overflow: hidden;
+  border-radius: $border-radius;
+  font-weight: 700;
+}
+.paySubmit{
+  font-size: 1.8rem;
+}
+.payCheck{
+  overflow: hidden;
+  border-radius: $border-radius;
+}
+.payCheckTotal{
+  color: $lakeblue !important;
+}
+.payInfoTh{
+  color: $infoTh;
+}
