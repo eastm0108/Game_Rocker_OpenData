@@ -1,5 +1,5 @@
 # Game_Rocker 遊戲買賣平台
-![首頁畫面](/markdown/front_desk_home.png "首頁畫面")
+![首頁畫面](https://upload.cc/i1/2018/11/06/WdXUjK.png "首頁畫面")
 
 ## Demo
 <https://eastm0108.github.io/Game_Rocker/#/>
