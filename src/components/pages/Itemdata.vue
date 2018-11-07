@@ -144,15 +144,15 @@
                 </tr>
               </tfoot>
             </table>
-          </div>
-          <!-- 優惠劵輸入處 -->
-          <div class="input-group mb-3 input-group-sm">
-            <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button"
-              @click="addCouponCode">
-                套用優惠碼
-              </button>
+            <!-- 優惠劵輸入處 -->
+            <div class="input-group mb-3 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                @click="addCouponCode">
+                  套用優惠碼
+                </button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -182,7 +182,7 @@ export default {
     return {
       product: {},
       productId: '',
-      productNum: '',
+      productNum: '1',
       isLoading: false,
       status: {
         loadingItem: '',

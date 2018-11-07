@@ -88,7 +88,6 @@ $border-radius: 0.25rem;
   border: 1px solid  #ffffff;
   transition: all 0.2s ease-in-out;
   border-radius: $border-radius;
-
 }
 .sortList:nth-child(1) .sortBtn{
   &:hover{
@@ -119,4 +118,24 @@ $border-radius: 0.25rem;
     background-color: $slide-color;
     border: 1px solid $slide-color;
   }
+}
+.sortBtn_All{
+  background-color: $allItem;
+  border: 1px solid $allItem;
+}
+.sortBtn_Super{
+  background-color: $fill-color;
+  border: 1px solid $fill-color;
+}
+.sortBtn_Classic{
+  background-color: $pulse-color;
+  border: 1px solid $pulse-color;
+}
+.sortBtn_Value{
+  background-color: $raise-color;
+  border: 1px solid $raise-color;
+}
+.sortBtn_Host{
+  background-color: $slide-color;
+  border: 1px solid $slide-color;
 }

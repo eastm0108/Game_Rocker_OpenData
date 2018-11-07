@@ -35,12 +35,18 @@
             <div class="col-sm-6 col-xs-6 mr-0 mb-3" v-for="item in products" :key="item.id">
             <div class="list mb-2">
               <div class="list-header">
-                  <a href="#" class="list-header-image index-card-a">
+                  <a href="#"
+                  @click.prevent="ProductData(item.id)" class="list-header-image index-card-a">
                     <img :src="item.imageUrl">
                   </a>
               </div>
               <div class="list-content">
-                  <h2><a href="#" class="text-dark index-card-a">{{item.title}}</a></h2>
+                  <h2>
+                    <a href="#"
+                    @click.prevent="ProductData(item.id)" class="text-dark index-card-a">
+                      {{item.title}}
+                    </a>
+                  </h2>
                   <span class="list-meta mb-1">
                     <div class="list-meta-item index-card-a text-danger h6">
                       <i class="fa fa-star"></i>
@@ -147,15 +153,15 @@
                 </tr>
               </tfoot>
             </table>
-          </div>
-          <!-- 優惠劵輸入處 -->
-          <div class="input-group mb-3 input-group-sm">
-            <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button"
-              @click="addCouponCode">
-                套用優惠碼
-              </button>
+            <!-- 優惠劵輸入處 -->
+            <div class="input-group mb-3 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                @click="addCouponCode">
+                  套用優惠碼
+                </button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">

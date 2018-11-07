@@ -127,8 +127,8 @@
             v-if="errors.has('address')"> 地址欄位不得留空 </span>
           </div>
           <div class="form-group">
-            <label class="text-lightTitle font-weight-bold" for="useraddress"> 留言 </label>
-            <textarea name="" id="" class="form-control" cols="30" rows="10"
+            <label class="text-lightTitle font-weight-bold" for="usertextarea"> 留言 </label>
+            <textarea name="" id="usertextarea" class="form-control" cols="30" rows="10"
               v-model="form.message"></textarea>
           </div>
           <div class="text-right">

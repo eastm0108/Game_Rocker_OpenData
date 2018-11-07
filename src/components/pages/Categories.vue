@@ -21,27 +21,32 @@
         <div class="col-md-2">
           <div class="row">
             <div class="col-sm-12 col-md-12 text-center mb-2 sortList">
-              <div class="sortBtn font-weight-bold" @click="sortStatus='all'">
+              <div class="sortBtn font-weight-bold"
+              :class="{'sortBtn_All': sortStatus=='all'}" @click="sortStatus='all'">
                 全部商品
               </div>
             </div>
             <div class="col-3 col-md-12 text-center mb-2 sortList">
-              <div class="sortBtn font-weight-bold" @click="sortStatus='超強大作'">
+              <div class="sortBtn font-weight-bold"
+              :class="{'sortBtn_Super': sortStatus=='超強大作'}" @click="sortStatus='超強大作'">
                 超強大作
               </div>
             </div>
             <div class="col-3 col-md-12 text-center mb-2 sortList">
-              <div class="sortBtn font-weight-bold" @click="sortStatus='經典商品'">
+              <div class="sortBtn font-weight-bold"
+              :class="{'sortBtn_Classic': sortStatus=='經典商品'}" @click="sortStatus='經典商品'">
                 經典商品
               </div>
             </div>
             <div class="col-3 col-md-12 text-center mb-2 sortList">
-              <div class="sortBtn font-weight-bold" @click="sortStatus='超值組合'">
+              <div class="sortBtn font-weight-bold"
+              :class="{'sortBtn_Value': sortStatus=='超值組合'}" @click="sortStatus='超值組合'">
                 超值組合
               </div>
             </div>
             <div class="col-3 col-md-12 text-center mb-2 sortList">
-              <div class="sortBtn font-weight-bold" @click="sortStatus='熱門主機'">
+              <div class="sortBtn font-weight-bold"
+              :class="{'sortBtn_Host': sortStatus=='熱門主機'}" @click="sortStatus='熱門主機'">
                 熱門主機
               </div>
             </div>
@@ -59,7 +64,7 @@
                 </div>
                 <div class="data">
                   <div class="content">
-                    <h1 class="title">
+                    <h1 class="title" @click="ProductData(item.id)">
                       {{item.title}}
                     </h1>
                     <p class="text">
@@ -156,14 +161,14 @@
                 </tr>
               </tfoot>
             </table>
-          </div>
-          <div class="input-group mb-3 input-group-sm">
-            <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button"
-              @click="addCouponCode">
-                套用優惠碼
-              </button>
+            <div class="input-group mb-3 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder=" 請輸入優惠碼 ">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                @click="addCouponCode">
+                  套用優惠碼
+                </button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
