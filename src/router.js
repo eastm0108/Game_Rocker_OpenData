@@ -1,19 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import HelloWorld from '@/components/HelloWorld';
-import Dashboard from '@/components/Dashboard';
-import Login from '@/components/pages/Login';
-import Products from '@/components/pages/Products';
-import Coupons from '@/components/pages/Coupons';
-import Orders from '@/components/pages/Orders';
-import TestOrder from '@/components/pages/TestOrder';
-import CustomerCheckout from '@/components/pages/CustomerCheckout';
-import Customer from '@/components/pages/Customer';
-import OrdersCheck from '@/components/pages/OrdersCheck';
-import Categories from '@/components/pages/Categories';
-import Itemdata from '@/components/pages/Itemdata';
-import OrdersPay from '@/components/pages/OrdersPay';
-import PayCheck from '@/components/pages/PayCheck';
+
+import Dashboard from './components/Dashboard.vue';
+// import Login from '';
+import Products from './views/Products.vue';
+import Coupons from './views/Coupons.vue';
+import Orders from './views/Orders.vue';
+import TestOrder from './views/TestOrder.vue';
+import CustomerCheckout from './views/CustomerCheckout.vue';
+import Customer from './views/Customer.vue';
+import OrdersCheck from './views/OrdersCheck.vue';
+import Categories from './views/Categories.vue';
+import Itemdata from './views/Itemdata.vue';
+import OrdersPay from './views/OrdersPay.vue';
+import PayCheck from './views/PayCheck.vue';
 
 Vue.use(Router);
 
@@ -26,7 +26,7 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login,
+      component: () => import('@/views/Login.vue'),
     },
     {
       path: '/admin',

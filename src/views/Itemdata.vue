@@ -76,7 +76,7 @@
     <footer class="container">
       <div class="row">
         <div class="col-md-4 mb-2">
-          <img src="../../assets/navbar_img.png" alt="Logo">
+          <img src="@/assets/navbar_img.png" alt="Logo">
         </div>
         <div class="col-md-4">
           <!-- <p class="text-white font-weight-bold h4">關於我們</p> -->
@@ -170,8 +170,8 @@
 
 <script>
 import $ from 'jquery';
-import CustomerNavbar from '../CustomerNavbar';
-import Alert from '../AlertMessage';
+import CustomerNavbar from '@/components/CustomerNavbar.vue';
+import Alert from '@/components/AlertMessage.vue';
 
 export default {
   components: {
@@ -197,7 +197,7 @@ export default {
   },
   methods: {
     getOrder(id) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
@@ -207,7 +207,7 @@ export default {
       });
     },
     getCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
       this.$http.get(api).then((response) => {
         console.log(response);
@@ -219,7 +219,7 @@ export default {
       $('#productModal').modal('show');
     },
     removeCartItem(id) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       const vm = this;
       vm.cartRemove = true;
       this.$http.delete(api).then((response) => {
@@ -229,7 +229,7 @@ export default {
       });
     },
     addCouponCode() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const vm = this;
       const coupon = {
         code: vm.coupon_code,
@@ -246,7 +246,7 @@ export default {
         this.$bus.$emit('messsage:push', '數量不正確！', 'danger');
         return;
       }
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
       const cart = {
         product_id: id,

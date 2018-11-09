@@ -141,7 +141,7 @@
     <footer class="container">
       <div class="row">
         <div class="col-md-4 mb-2">
-          <img src="../../assets/navbar_img.png" alt="Logo">
+          <img src="@/assets/navbar_img.png" alt="Logo">
         </div>
         <div class="col-md-4">
           <!-- <p class="text-white font-weight-bold h4">關於我們</p> -->
@@ -161,8 +161,8 @@
 </template>
 
 <script>
-import CustomerNavbar from '../CustomerNavbar';
-import Alert from '../AlertMessage';
+import CustomerNavbar from '@/components/CustomerNavbar.vue';
+import Alert from '@/components/AlertMessage.vue';
 
 export default {
   components: {
@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     getCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
@@ -205,7 +205,7 @@ export default {
       });
     },
     addCouponCode() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const vm = this;
       const coupon = {
         code: vm.coupon_code,
@@ -218,7 +218,7 @@ export default {
       });
     },
     removeCartItem(id) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       const vm = this;
       vm.isLoading = true;
       vm.cartRemove = true;
@@ -230,7 +230,7 @@ export default {
       });
     },
     createOrder() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const vm = this;
       const order = vm.form;
       // vm.isLoading = true;

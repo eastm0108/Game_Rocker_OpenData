@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Navbar from './Navbar';
-import Alert from './AlertMessage';
+import Navbar from './Navbar.vue';
+import Alert from './AlertMessage.vue';
 
 export default {
   components: {

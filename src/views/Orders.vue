@@ -11,9 +11,8 @@
           <th> 是否付款 </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="orders.length">
         <tr v-for="(item, key) in sortOrder" :key="key"
-          v-if="orders.length"
           :class="{'text-secondary': !item.is_paid}">
           <td>{{ item.create_at | date }}</td>
           <td><span v-text="item.user.email" v-if="item.user"></span></td>
@@ -37,7 +36,7 @@
   </div>
 </template>
 <script>
-import Pagination from '../Pagination';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   data() {
@@ -54,7 +53,7 @@ export default {
   methods: {
     getOrders(currentPage = 1) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/orders?page=${currentPage}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${currentPage}`;
       vm.isLoading = true;
       this.$http.get(url, vm.tempProduct).then((response) => {
         if (response.data.success) {
@@ -87,7 +86,7 @@ export default {
   },
   created() {
     this.getOrders();
-    console.log(process.env.APIPATH);
+    console.log(process.env.VUE_APP_APIPATH);
   },
 };
 </script>

@@ -131,7 +131,7 @@
 
 <script>
 import $ from 'jquery';
-import Pagination from '../Pagination';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   data() {
@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     getCoupons(page = 1) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
@@ -180,11 +180,11 @@ export default {
       $('#couponModal').modal('show');
     },
     updatecoupon() {
-      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon`;
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
       let httpMethod = 'post';
       const vm = this;
       if (!vm.isNew) {
-        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
         httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
@@ -206,7 +206,7 @@ export default {
     },
     deleteCoupon() {
       const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.PreDeleteCoupon.id}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.PreDeleteCoupon.id}`;
       console.log(this.PreDeleteCoupon);
       this.$http.delete(api).then((response) => {
         console.log(response.data);
@@ -227,7 +227,7 @@ export default {
       const vm = this;
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
       vm.status.fileUploading = true;
       this.$http.post(url, formData, {
         headers: {

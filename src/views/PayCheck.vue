@@ -99,7 +99,7 @@
     <footer class="container">
       <div class="row">
         <div class="col-md-4 mb-2">
-          <img src="../../assets/navbar_img.png" alt="Logo">
+          <img src="@/assets/navbar_img.png" alt="Logo">
         </div>
         <div class="col-md-4">
           <!-- <p class="text-white font-weight-bold h4">關於我們</p> -->
@@ -119,8 +119,8 @@
 </template>
 
 <script>
-import CustomerNavbar from '../CustomerNavbar';
-import Alert from '../AlertMessage';
+import CustomerNavbar from '@/components/CustomerNavbar.vue';
+import Alert from '@/components/AlertMessage.vue';
 
 export default {
   components: {
@@ -139,20 +139,20 @@ export default {
   methods: {
     getOrder() {
       const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${vm.orderId}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;
       vm.isLoading = true;
       this.$http.get(api).then((response) => {
         vm.order = response.data.order;
-        console.log(response);
+        // console.log(response);
         vm.isLoading = false;
       });
     },
     payOrder() {
       const vm = this;
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${vm.orderId}`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
       vm.isLoading = true;
       this.$http.post(api).then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.success) {
           vm.getOrder();
         }
@@ -166,7 +166,7 @@ export default {
   created() {
     this.orderId = this.$route.params.orderId;
     this.getOrder();
-    console.log(this.orderId);
+    // console.log(this.orderId);
   },
 };
 </script>

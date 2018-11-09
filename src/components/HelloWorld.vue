@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     signout() {
-      const api = `${process.env.APIPATH}/logout`;
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
       const vm = this;
       /* eslint-disable no-console */
       this.$http.post(api).then((response) => {

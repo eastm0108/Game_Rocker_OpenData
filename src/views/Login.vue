@@ -39,8 +39,8 @@ export default {
   },
   methods: {
     signin() {
-      const api = `${process.env.APIPATH}/admin/signin`;
       const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       vm.message = false;
       vm.isLoading = true;
       this.$http.post(api, vm.user).then((response) => {

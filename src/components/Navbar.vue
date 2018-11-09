@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid px-0">
       <div class="navbar-brand navbar-logo">
-        <img src="../assets/navbar_img.png" alt="Logo">
+        <img src="@/assets/navbar_img.png" alt="Logo">
       </div>
       <button class="navbar-toggler ml-auto mt-3 mr-1"
       type="button" data-toggle="collapse"
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     signout() {
-      const api = `${process.env.APIPATH}/logout`;
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
       const vm = this;
       /* eslint-disable no-console */
       this.$http.post(api).then((response) => {

@@ -48,7 +48,7 @@ export default {
       vm.togglerBar = !vm.togglerBar;
     },
     getCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
       this.$http.get(api).then((response) => {
         console.log(response);
