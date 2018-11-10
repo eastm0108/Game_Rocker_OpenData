@@ -123,8 +123,8 @@
                 <th> 數量 </th>
                 <th> 單價 </th>
               </thead>
-              <tbody>
-                <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts">
+              <tbody v-if="cart.carts">
+                <tr v-for="item in cart.carts" :key="item.id" >
                   <td class="align-middle">
                     <button type="button" class="btn btn-outline-danger btn-sm"
                     @click="removeCartItem(item.id)">
@@ -179,95 +179,54 @@
 
 <script>
 import $ from 'jquery';
-import carousel from 'vue-owl-carousel';
+// import carousel from 'vue-owl-carousel';
 import CustomerNavbar from '@/components/CustomerNavbar.vue';
 import Alert from '@/components/AlertMessage.vue';
 import CustomerCarousel from '@/components/CustomerCarousel.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     CustomerNavbar,
     Alert,
     CustomerCarousel, // 廣告
-    carousel,
+    // carousel,
   },
   data() {
     return {
-      products: [],
-      product: {},
-      status: {
-        loadingItem: '',
-      },
-      isLoading: false,
+      // products: [],
+      // product: {},
+      // status: {
+      //   loadingItem: '',
+      // },
+      // isLoading: false,
       // 購物車用
-      cart: {},
-      cart_lenght: 0,
+      // cart: {},
+      // cart_lenght: 0,
       carStatu: false,
       coupon_code: '',
-      cartRemove: false,
+      // cartRemove: false,
     };
   },
   methods: {
     getProducts() {
-      // 取得全部
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        console.log(response);
-        vm.isLoading = false;
-        vm.products = response.data.products;
-      });
+      this.$store.dispatch('getProducts');
     },
     getProduct(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      const vm = this;
-      vm.status.loadingItem = id;
-      this.$http.get(api).then((response) => {
-        vm.product = response.data.product;
-        console.log(response);
-        vm.status.loadingItem = '';
-        $('#productModal').modal('show');
-      });
+      this.$store.dispatch('getProduct', id);
     },
     // 購物車用
     getCart() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      const vm = this;
-      this.$http.get(api).then((response) => {
-        console.log(response);
-        vm.cart = response.data.data;
-        vm.cart_lenght = (vm.cart.carts).length;
-      });
+      this.$store.dispatch('getCart');
     },
     openCar() {
       $('#productModal').modal('show');
     },
     addtoCart(id, qty = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      const vm = this;
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      vm.status.loadingItem = id;
-      this.$http.post(api, { data: cart }).then((response) => {
-        console.log(response);
-        vm.status.loadingItem = '';
-        vm.getCart();
-        $('#productModal').modal('hide');
-        this.$bus.$emit('messsage:push', '加入到購物車囉！', 'lakeblue');
-      });
+      this.$store.dispatch('addtoCart', { id, qty });
     },
     removeCartItem(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      const vm = this;
-      vm.cartRemove = true;
-      this.$http.delete(api).then((response) => {
-        console.log(response);
-        vm.cartRemove = false;
-        vm.getCart();
-      });
+      this.$store.dispatch('removeCartItem', id);
     },
     addCouponCode() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
@@ -275,10 +234,10 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
       });
     },
@@ -294,6 +253,9 @@ export default {
       $('#productModal').modal('hide');
       this.$router.push('/orders_pay');
     },
+  },
+  computed: {
+    ...mapGetters(['isLoading', 'products', 'product', 'cart', 'cart_lenght', 'cartRemove', 'status']),
   },
   created() {
     this.getProducts();

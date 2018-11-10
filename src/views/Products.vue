@@ -187,7 +187,7 @@ export default {
       pagination: {},
       tempProduct: {},
       isNew: false,
-      isLoading: false,
+      // isLoading: false,
       PreDeleteProduct: {},
       status: {
         fileUploading: false,
@@ -203,15 +203,15 @@ export default {
       ${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}
       `;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           // console.log(response.data);
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           vm.products = response.data.products;
           vm.pagination = response.data.pagination;
         } else {
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           /* eslint-disable */
           alert('請登出，重新登入系統');
           /* eslint-enable */
@@ -303,6 +303,11 @@ export default {
       });
       // console.log(vm);
       // console.log(uploadedFile);
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

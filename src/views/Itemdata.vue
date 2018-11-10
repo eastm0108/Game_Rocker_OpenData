@@ -114,8 +114,8 @@
                 <th> 數量 </th>
                 <th> 單價 </th>
               </thead>
-              <tbody>
-                <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts">
+              <tbody v-if="cart.carts">
+                <tr v-for="item in cart.carts" :key="item.id" >
                   <td class="align-middle">
                     <button type="button" class="btn btn-outline-danger btn-sm"
                     @click="removeCartItem(item.id)">
@@ -183,7 +183,7 @@ export default {
       product: {},
       productId: '',
       productNum: '1',
-      isLoading: false,
+      // isLoading: false,
       status: {
         loadingItem: '',
       },
@@ -199,10 +199,10 @@ export default {
     getOrder(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.product = response.data.product;
       });
     },
@@ -234,10 +234,10 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
       });
     },
@@ -263,6 +263,11 @@ export default {
     goPay() {
       $('#productModal').modal('hide');
       this.$router.push('/orders_pay');
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

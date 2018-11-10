@@ -131,8 +131,8 @@
                 <th> 數量 </th>
                 <th> 單價 </th>
               </thead>
-              <tbody>
-                <tr v-if="cart.carts" v-for="item in cart.carts" :key="item.id">
+              <tbody v-if="cart.carts">
+                <tr  v-for="item in cart.carts" :key="item.id">
                   <td class="align-middle">
                     <button type="button" class="btn btn-outline-danger btn-sm"
                     @click="removeCartItem(item.id)">
@@ -185,7 +185,7 @@
 
 <script>
 import $ from 'jquery';
-import carousel from 'vue-owl-carousel';
+// import carousel from 'vue-owl-carousel';
 import CustomerNavbar from '@/components/CustomerNavbar.vue';
 import Alert from '@/components/AlertMessage.vue';
 import CustomerCarousel from '@/components/CustomerCarousel.vue';
@@ -195,7 +195,7 @@ export default {
     CustomerNavbar,
     Alert,
     CustomerCarousel,
-    carousel,
+    // carousel,
   },
   data() {
     return {
@@ -203,7 +203,7 @@ export default {
       sortStatus: 'all',
       // 產品
       products: [],
-      isLoading: false,
+      // isLoading: false,
       // 購物車用
       status: {
         loadingItem: '',
@@ -220,10 +220,10 @@ export default {
       // 取得全部
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.products = response.data.products;
       });
     },
@@ -247,10 +247,10 @@ export default {
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.cart = response.data.data;
         vm.cart_lenght = (vm.cart.carts).length;
       });
@@ -274,10 +274,10 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
       });
     },
@@ -313,6 +313,9 @@ export default {
           break;
       }
       return 1;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

@@ -11,6 +11,7 @@
 #### 技術
 * Vue-Cli 3
 * Vue-Router
+* Vuex
 * 元件拆分
 * Webpack 打包
 * API 操作 (前後端分離)

@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       avatar,
-      isLoading: false,
+      // isLoading: false,
       user: {
         username: '',
         password: '',
@@ -42,16 +42,21 @@ export default {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       vm.message = false;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, vm.user).then((response) => {
         if (response.data.success) {
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           vm.$router.push('/admin/products');
         } else {
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           vm.message = true;
         }
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
 };

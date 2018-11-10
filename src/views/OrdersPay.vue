@@ -46,8 +46,8 @@
           <th> 數量 </th>
           <th> 單價 </th>
         </thead>
-        <tbody>
-          <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts">
+        <tbody v-if="cart.carts">
+          <tr v-for="item in cart.carts" :key="item.id" >
             <td class="align-middle">
               <button type="button" class="btn btn-outline-danger btn-sm"
               @click="removeCartItem(item.id)">
@@ -175,7 +175,7 @@ export default {
       status: {
         loadingItem: '',
       },
-      isLoading: false,
+      // isLoading: false,
       cart: {},
       cart_lenght: 0,
       carStatu: false,
@@ -196,10 +196,10 @@ export default {
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.cart = response.data.data;
         vm.cart_lenght = (vm.cart.carts).length;
       });
@@ -210,21 +210,21 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
       });
     },
     removeCartItem(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       vm.cartRemove = true;
       this.$http.delete(api).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.cartRemove = false;
         vm.getCart();
       });
@@ -233,7 +233,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const vm = this;
       const order = vm.form;
-      // vm.isLoading = true;
+      // vm.$store.dispatch('updateLoading', true);
       this.$validator.validate().then((result) => {
         if (result) {
           this.$http.post(api, { data: order }).then((response) => {
@@ -241,7 +241,7 @@ export default {
             if (response.data.success) {
               vm.$router.push(`/pay_check/${response.data.orderId}`);
             }
-            vm.isLoading = false;
+            vm.$store.dispatch('updateLoading', false);
             // vm.getCart();
           });
         } else {
@@ -251,6 +251,11 @@ export default {
     },
     goBack(page) {
       this.$router.push(`/${page}`);
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
@@ -10,13 +11,14 @@ import VeeValidate, { Validator } from 'vee-validate';
 import App from './App.vue';
 import router from './router';
 import './bus';
+import store from './store';
 import currencyFilter from './filters/currency';
 import dateFilter from './filters/date';
 
 axios.defaults.withCredentials = true;
 Vue.config.productionTip = false;
 
-
+Vue.use(vuex);
 Validator.localize('zh_TW', zhTWValidate);
 Vue.use(VeeValidate, {
   locale: 'zh_TW',
@@ -31,6 +33,7 @@ Vue.filter('date', dateFilter);
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');
 

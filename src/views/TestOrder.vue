@@ -174,21 +174,21 @@
 </template>
 
 <script>
-import $ from 'jquery';
-
+// import $ from 'jquery';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'TestOrder',
   data() {
     return {
-      products: [],
-      product: {},
+      // products: [],
+      // product: {},
       coupon_code: '',
-      cart: {},
-      status: {
-        loadingItem: '',
-      },
-      isLoading: false,
+      // cart: {},
+      // status: {
+      //   loadingItem: '',
+      // },
+      // isLoading: false,
       form: {
         user: {
           name: '',
@@ -202,61 +202,19 @@ export default {
   },
   methods: {
     getProducts() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        console.log(response);
-        vm.isLoading = false;
-        vm.products = response.data.products;
-      });
+      this.$store.dispatch('getProducts');
     },
     getProduct(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      const vm = this;
-      vm.status.loadingItem = id;
-      this.$http.get(api).then((response) => {
-        vm.product = response.data.product;
-        console.log(response);
-        vm.status.loadingItem = '';
-        $('#productModal').modal('show');
-      });
+      this.$store.dispatch('getProduct', id);
     },
     addtoCart(id, qty = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      const vm = this;
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      vm.status.loadingItem = id;
-      this.$http.post(api, { data: cart }).then((response) => {
-        console.log(response);
-        vm.status.loadingItem = '';
-        vm.getCart();
-        $('#productModal').modal('hide');
-      });
+      this.$store.dispatch('addtoCart', { id, qty });
     },
     getCart() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((response) => {
-        // vm.products = response.data.products;
-        console.log(response);
-        vm.isLoading = false;
-        vm.cart = response.data.data;
-      });
+      this.$store.dispatch('getCart');
     },
     removeCartItem(id) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.delete(api).then((response) => {
-        console.log(response);
-        vm.isLoading = false;
-        vm.getCart();
-      });
+      this.$store.dispatch('removeCartItem', id);
     },
     addCouponCode() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
@@ -264,10 +222,10 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((response) => {
         console.log(response);
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
       });
     },
@@ -275,7 +233,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const vm = this;
       const order = vm.form;
-      // vm.isLoading = true;
+      // vm.$store.dispatch('updateLoading', true);
       this.$validator.validate().then((result) => {
         if (result) {
           this.$http.post(api, { data: order }).then((response) => {
@@ -283,7 +241,7 @@ export default {
             if (response.data.success) {
               vm.$router.push(`/customer_checkout/${response.data.orderId}`);
             }
-            vm.isLoading = false;
+            vm.$store.dispatch('updateLoading', false);
             // vm.getCart();
           });
         } else {
@@ -291,6 +249,9 @@ export default {
         }
       });
     },
+  },
+  computed: {
+    ...mapGetters(['isLoading', 'products', 'product', 'cart', 'cart_lenght', 'cartRemove', 'status']),
   },
   created() {
     this.getProducts();

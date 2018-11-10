@@ -44,7 +44,7 @@ export default {
       orders: {},
       isNew: false,
       pagination: {},
-      isLoading: false,
+      // isLoading: false,
     };
   },
   components: {
@@ -54,15 +54,15 @@ export default {
     getOrders(currentPage = 1) {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${currentPage}`;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(url, vm.tempProduct).then((response) => {
         if (response.data.success) {
           vm.orders = response.data.orders;
           vm.pagination = response.data.pagination;
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           console.log(response);
         } else {
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           /* eslint-disable */
           alert('請登出，重新登入系統');
           /* eslint-enable */
@@ -82,6 +82,9 @@ export default {
         });
       }
       return newOrder;
+    },
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {

@@ -140,7 +140,7 @@ export default {
       pagination: {},
       tempCoupon: {},
       isNew: false,
-      isLoading: false,
+      // isLoading: false,
       PreDeleteCoupon: {},
       status: {
         fileUploading: false,
@@ -154,15 +154,15 @@ export default {
     getCoupons(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           console.log(response.data);
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           vm.coupons = response.data.coupons;
           vm.pagination = response.data.pagination;
         } else {
-          vm.isLoading = false;
+          vm.$store.dispatch('updateLoading', false);
           /* eslint-disable */
           alert('請登出，重新登入系統');
           /* eslint-enable */
@@ -246,6 +246,11 @@ export default {
       });
       // console.log(vm);
       // console.log(uploadedFile);
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {
